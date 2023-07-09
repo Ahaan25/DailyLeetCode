@@ -1,0 +1,47 @@
+import java.util.*;
+
+class Solution {
+    public static String longestPalindrome(String s) {
+        int count = -1;
+        String lp = "";
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+
+        for (int g = 0; g < n; g++) {
+            for (int i = 0, j = g; j < n; i++, j++) {
+                if (g == 0) {
+                    dp[i][j] = true;
+                } 
+                else if (g == 1) {
+                    if (s.charAt(i) == s.charAt(j)) {
+                        dp[i][j] = true;
+                    } 
+                    else {
+                        dp[i][j] = false;
+                    }
+                } 
+                else {
+                    if (s.charAt(i) == s.charAt(j)
+                            && dp[i + 1][j - 1] == true) {
+                        dp[i][j] = true;
+                    } 
+                    else {
+                        dp[i][j] = false;
+                    }
+                }
+                if (dp[i][j] == true && count < s.substring(i, j + 1).length()) {
+                    lp = s.substring(i, j + 1);
+                    count = lp.length();
+                }
+            }
+        }
+        return lp;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        longestPalindrome(s);
+    }
+
+}
